@@ -9,17 +9,34 @@ class App extends Component {
     filter: '',
   };
   formSubmitHandler = data => {
-    this.setState(prevState => {
-      return { contacts: [data, ...prevState.contacts] };
-    });
+    this.state.contacts.find(i => i.name === data.name)
+      ? alert('Fuck off with your same name')
+      : this.setState(prevState => {
+          return { contacts: [data, ...prevState.contacts] };
+        });
     console.log(data);
+  };
+  filterHandler = e => {
+    this.setState({
+      filter: e.currentTarget.value.toLowerCase(),
+    });
+  };
+
+  onDeleteContactHandler = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(i => i.id !== id),
+    }));
   };
 
   render() {
     return (
       <div>
         <Form onSubmit={this.formSubmitHandler} />
-        <Contacts state={this.state} />
+        <Contacts
+          state={this.state}
+          filter={this.filterHandler}
+          onDelete={this.onDeleteContactHandler}
+        />
       </div>
     );
   }

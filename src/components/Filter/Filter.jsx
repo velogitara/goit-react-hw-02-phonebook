@@ -1,9 +1,12 @@
 import React from 'react';
 
-const Filter = () => {
+const Filter = ({ title, filter }) => {
   return (
     <div>
-      <h3>Find contacts by name</h3>
+      <h3>{title}</h3>
+      <label>
+        <input type="text" placeholder="add something" onChange={filter} />
+      </label>
     </div>
   );
 };
