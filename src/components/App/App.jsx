@@ -1,7 +1,8 @@
-import Form from './Form';
-import Contacts from './Contacts';
-
+import Form from '../Form';
+import Contacts from '../Contacts';
+import { Section } from './App.styled';
 import React, { Component } from 'react';
+import Notiflix from 'notiflix';
 
 class App extends Component {
   state = {
@@ -10,7 +11,9 @@ class App extends Component {
   };
   formSubmitHandler = data => {
     this.state.contacts.find(i => i.name === data.name)
-      ? alert('Fuck off with your same name')
+      ? Notiflix.Notify.failure('That name already in the list', {
+          position: 'center-center',
+        })
       : this.setState(prevState => {
           return { contacts: [data, ...prevState.contacts] };
         });
@@ -30,14 +33,14 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <Section>
         <Form onSubmit={this.formSubmitHandler} />
         <Contacts
           state={this.state}
           filter={this.filterHandler}
           onDelete={this.onDeleteContactHandler}
         />
-      </div>
+      </Section>
     );
   }
 }
